@@ -49,7 +49,7 @@ def create_test_users():
 
 @app.route('/users', methods = ['POST'])
 def create_user():
-    c =  json.loads(request.form['values'])
+    c = json.loads(request.form['values'])
     user = entities.User(
         username=c['username'],
         name=c['name'],

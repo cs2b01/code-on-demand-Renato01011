@@ -1,5 +1,10 @@
+$('.message a').click(function(){
+   $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+});
+
 function getData(){
         $('#action').html("Authenticating...");
+        $('#loading').show()
         var username = $('#username').val();
         var password = $('#password').val();
         var message = JSON.stringify({
@@ -16,10 +21,15 @@ function getData(){
             success: function(response){
                 //alert(JSON.stringify(response));
                 $('#action').html(response['statusText']);
+                $('#loading').hide()
+                $('#ok').show()
             },
             error: function(response){
                 //alert(JSON.stringify(response));
                 $('#action').html(response['statusText']);
+                $('#loading').hide()
+                $('#notok').show()
             }
         });
     }
+
