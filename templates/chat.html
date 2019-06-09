@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/main.css') }}">
+    <title>Chat</title>
+  </head>
+  <body>
+  <div ><a href="/static/login.html">Return to Login</a></div>
+  <div ><a href="/chat_users">Return</a></div>
+  <main role="main" class="container">
+    {% for post in posts_1 %}
+      {% if post %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ post.user_from.name }}</a>
+              <small class="text-muted">{{ post.sent_on }}</small>
+              <small class="text-muted"> sent to = {{ post.user_to.name }}</small>
+            </div>
+            <p class="article-content">{{ post.content }}</p>
+          </div>
+        </article>
+     {% endif %}
+    {% endfor %}
+    {% for post in posts_2 %}
+      {% if post %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ post.user_from.name }}</a>
+              <small class="text-muted">{{ post.sent_on }}</small>
+              <small class="text-muted"> sent to = {{ post.user_to.name }}</small>
+            </div>
+            <p class="article-content">{{ post.content }}</p>
+          </div>
+        </article>
+    {% endif %}
+    {% endfor %}
+  </main>
+
+  <form action="" method="POST">
+      <input type="text" placeholder="Message" id="content" name="content"/>
+      <input type="submit" id="send" name="send"/>
+    </form>
+
+  <script>
+    $(document).ready(function() {
+
+      var socket = io.connect('https://127.0.0.1:8080');
+
+      socket.on('message', function(msg) {
+        location.reload();
+      });
+
+      $('#send').on('click', function() {
+        socket.send($('#contect').val())
+      })
+
+    });
+  </script>
+
+  </body>
+  </html>
