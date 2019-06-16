@@ -1,5 +1,9 @@
 var currentUserId = 0;
 var currentClickedId = 0;
+function SortBySentOn(x,y) {
+    return ((x.sent_on == y.sent_on) ? 0 : ((x.sent_on > y.sent_on) ? 1 : -1));
+}
+
 function whoami(){
         $.ajax({
             url:'/current',
@@ -53,6 +57,9 @@ function whoami(){
             contentType: 'application/json',
             dataType:'json',
             success: function(response){
+
+                response.sort(SortBySentOn);
+
                 $('#sent_messages').empty('');
                 i = 0;
                 $.each(response, function(){
